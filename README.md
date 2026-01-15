@@ -1,6 +1,6 @@
 USTH Machine Learning in Medicine 2026
 ==================================
 
-* Your name here
-* Your ID here
+* Nguyen Thanh Vinh
+* 23BI14453
 * Your team ID here
