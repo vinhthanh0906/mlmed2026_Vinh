@@ -1,0 +1,142 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{graphicx} 
+\usepackage{booktabs}
+\bibliography{references}
+\usepackage{url}
+
+\title{Machine Learning in Medicine: Pratice 2 \par (Fetal Head Segmentaion Classification )}
+\author{Vinh Thanh Nguyen - 23BI14453}
+\date{January 2026}
+\begin{document}
+
+\maketitle
+
+\section{\textbf{Introduction}}
+Machine Learning nowadays provide many method that help many field: Finance \& Stock, Math, and so on. Especically, Machine Learning play the critical role in medical field, the most common task that Machine Learning does is \textbf{Diagnosis decease}. The input will be symptoms, health state, measurement of body (weight, blood pressure, height, etc.). This implementation of machine learning saves a significant amount of time for doctors and prevents any human faults. 
+
+
+\section{\textbf{Abstract}}
+
+During pregnancy, ultrasound imaging is used to measure fetal biometrics. One of these measurements is the fetal head circumference (HC). The HC can be used to estimate the gestational age and monitor growth of the fetus. The HC is measured in a specific cross section of the fetal head, which is called the standard plane. The dataset for this challenge contains a total of 1334 two-dimensional (2D) ultrasound images of the standard plane that can be used to measure the HC. This challenge makes it possible to compare developed algorithms for automated measurement of fetal head circumference in 2D ultrasound images. In this laboratory work we will use the\textbf{ HC18 Fetal Head Dataset}
+
+\section*{Citation}
+\begin{itemize}
+    \item Thomas L. A. van den Heuvel, Dagmar de Bruijn, Chris L. de Korte and Bram van Ginneken. Automated measurement of fetal head circumference using 2D ultrasound images. PloS one, 13.8 (2018): e0200412.
+
+    \item Thomas L. A. van den Heuvel, Dagmar de Bruijn, Chris L. de Korte and Bram van Ginneken. Automated measurement of fetal head circumference using 2D ultrasound images [Data set]. Zenodo. http://doi.org/10.5281/zenodo.1322001
+\end{itemize}
+
+
+\section{\textbf{Dataset Overview}}
+The dataset contain 999 ultrasonics images and their annotations, 335 images in the test set. Some of image has its variant and different copy for better information. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/image_out.png}
+    \caption{Image Samples}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{images/anno_out.png}
+    \caption{Annotation Samples}
+    \label{fig:placeholder}
+\end{figure}
+
+We can see that we have mask annotations which circle the fetal head ultrasound image.
+
+\section{\textbf{U-Net: Segmentation Specified Architecture}}
+U-Net is a kind of neural network mainly used for image segmentation which means dividing an image into different parts to identify specific objects for example separating a tumor from healthy tissue in a medical scan. The name “U-Net” comes from the shape of its architecture which looks like the letter “U” when drawn. It is widely used in medical imaging because it performs well even with a small amount of labeled data.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{images/u-net.png}
+    \caption{U-Net Architecture}
+    \label{fig:placeholder}
+\end{figure}
+
+\section*{U-Net Pipeline}
+
+\begin{enumerate}
+    \item \textbf{Input Image:} 
+    The process starts by feeding a medical or other input image, typically grayscale, into the network.
+
+    \item \textbf{Feature Extraction (Encoder):} 
+    The encoder extracts increasingly abstract features by applying convolutional layers and downsampling operations. 
+    At each level, the spatial resolution decreases while the number of feature channels increases, allowing the model 
+    to capture higher-level patterns.
+
+    \item \textbf{Bottleneck Processing:} 
+    This is the central part of the network where the image representation is reduced the most. 
+    It contains a compact but highly informative representation that captures the main semantic features of the input.
+
+    \item \textbf{Reconstruction and Localization (Decoder):} 
+    The decoder reconstructs the original image size through upsampling. 
+    At each stage, decoder features are combined with corresponding encoder features using skip connections 
+    to retain fine-grained spatial information.
+
+    \item \textbf{Skip Connections for Precision:} 
+    Skip connections help preserve spatial accuracy by transferring detailed features from earlier layers. 
+    These connections are particularly important for accurately identifying boundaries in segmentation tasks.
+
+    \item \textbf{Final Prediction:} 
+    A $1 \times 1$ convolution at the final layer converts the refined feature maps into the final segmentation map, 
+    where each pixel is classified into a specific class such as foreground or background. 
+    The output has the same spatial resolution as the input image.
+\end{enumerate}
+
+\section{Implementation & Evaluation}
+\begin{table}[t]
+\centering
+\caption{Segmentation Performance of U-Net}
+\label{tab:unet_single_metrics}
+\begin{tabular}{lcc}
+\hline
+\textbf{Model} & \textbf{Dice (\%)} & \textbf{IoU (\%)} \\
+\hline
+U-Net & 84.6 & 83.2 \\
+\hline
+\end{tabular}
+\end{table}
+    
+
+
+% Do later
+
+\begin{thebibliography}{9}
+
+\bibitem{ronneberger2015u}
+O. Ronneberger, P. Fischer, and T. Brox,
+``U-Net: Convolutional Networks for Biomedical Image Segmentation,''
+arXiv:1505.04597, 2015.
+Available: \url{https://arxiv.org/abs/1505.04597}
+
+\bibitem{unet_github}
+Ankit Kumar,
+``U-net for Image Segmentation from Scratch in PyTorch,''
+GitHub repository,
+2020.
+Available: \url{https://github.com/Ankitkumar803/U-net-for-image-segmentation-from-scratch--PyTorch.git}
+
+\bibitem{geeksforgeeks_unet}
+GeeksforGeeks,
+``U-Net Architecture Explained,''
+Online tutorial,
+2024.
+Available: \url{https://www.geeksforgeeks.org/machine-learning/u-net-architecture-explained/}
+
+\end{thebibliography}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
