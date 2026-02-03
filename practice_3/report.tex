@@ -1,0 +1,74 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Xray Lung Infection Region Segmentation}
+\author{Vinh Thanh Nguyen - 23BI14453}
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+\section{Abstract}
+The automatic segmentation of the lung region for chest X-ray (CXR) can help doctors diagnose many lung diseases. However, extreme lung shape changes and fuzzy lung regions caused by serious lung diseases may incorrectly make the automatic lung segmentation model. For the experiment we will use the enhanced version of U-net with EfficientnetB4 as encoder.
+
+
+
+\section{Introduction}
+Among the existing medical imaging methods, X-ray is one of the most commonly used diagnostic technology as it is widely available, low cost, non-invasive, and easy to acquire1. Chest radiography is the most popular and important imaging modality used to diagnose various pulmonary diseases. Applying deep learning in medical imaging can help medical experts carry out screening and diagnosis and reduce their burden. But are there some challenges: Lung Volume difference, the shape and size of the lung vary with age, gender, and heart size, .etc
+
+
+\section{Dataset Overview }
+To the best of the knowledge, this is the first study that utilizes both lung and infection segmentation to detect, localize and quantify COVID-19 infection from X-ray images. Therefore, it can assist the medical doctors to better diagnose the severity of COVID-19 pneumonia and follow up the progression of the disease easily.
+
+The experiments were conducted on two CXR sets, where each set is divided into train, validation and test sets:
+1) Lung Segmentation Data
+Entire COVID-QU-Ex dataset (33,920 CXR images with corresponding ground-truth lung masks)
+2) COVID-19 Infection Segmentation Data
+A subset of COVID-QU-Ex dataset (1,456 Normal and 1,457 Non-COVID-19 CXRs with corresponding lung mask, plus 2,913 COVID-19 CXRs with
+corresponding lung mask from COVID-QU-Ex dataset and corresponding infections masks from QaTaCov19 dataset).
+
+
+
+\section{\textbf{U-Net: Segmentation Specified Architecture}}
+U-Net is a kind of neural network mainly used for image segmentation which means dividing an image into different parts to identify specific objects for example separating a tumor from healthy tissue in a medical scan. The name “U-Net” comes from the shape of its architecture which looks like the letter “U” when drawn. It is widely used in medical imaging because it performs well even with a small amount of labeled data.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{images/u-net.png}
+    \caption{U-Net Architecture}
+    \label{fig:placeholder}
+\end{figure}
+
+\section*{U-Net Pipeline}
+
+\begin{enumerate}
+    \item \textbf{Input Image:} 
+    The process starts by feeding a medical or other input image, typically grayscale, into the network.
+
+    \item \textbf{Feature Extraction (Encoder):} 
+    The encoder extracts increasingly abstract features by applying convolutional layers and downsampling operations. 
+    At each level, the spatial resolution decreases while the number of feature channels increases, allowing the model 
+    to capture higher-level patterns.
+
+    \item \textbf{Bottleneck Processing:} 
+    This is the central part of the network where the image representation is reduced the most. 
+    It contains a compact but highly informative representation that captures the main semantic features of the input.
+
+    \item \textbf{Reconstruction and Localization (Decoder):} 
+    The decoder reconstructs the original image size through upsampling. 
+    At each stage, decoder features are combined with corresponding encoder features using skip connections 
+    to retain fine-grained spatial information.
+
+    \item \textbf{Skip Connections for Precision:} 
+    Skip connections help preserve spatial accuracy by transferring detailed features from earlier layers. 
+    These connections are particularly important for accurately identifying boundaries in segmentation tasks.
+
+    \item \textbf{Final Prediction:} 
+    A $1 \times 1$ convolution at the final layer converts the refined feature maps into the final segmentation map, 
+    where each pixel is classified into a specific class such as foreground or background. 
+    The output has the same spatial resolution as the input image.
+\end{enumerate}
+
+\section{Implementation and Result}
+
+\end{document}
